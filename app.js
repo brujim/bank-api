@@ -13,7 +13,14 @@ app.use(express.json())
 //Methods
 
 app.get("/", (req, res) => {
-  return res.json({titulo: "Como criar API"})
+  Account.find({}).then((account) => {
+    return res.json(account)
+  }).catch((erro) => {
+    return res.status(400).json({
+      error: true,
+      message: "No accounts found!"
+    })
+  })
 });
 
 app.post('/account', (req, res) => {
